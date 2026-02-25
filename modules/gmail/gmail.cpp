@@ -1,6 +1,6 @@
 #include "gmail.h"
 #include <ArduinoJson.h>
-#include <base64.h> // For encoding emails in base64
+#include <base64.h>
 
 GmailModule::GmailModule(OAuthManager *oauthManager,
                          OAuthToken *oauthToken,
@@ -29,8 +29,7 @@ bool GmailModule::send(const OpenRF_Packet &pkt) {
     String base64Email = base64::encode(emailContent);
 
     HTTPClient http;
-    String url = "https://gmail.googleapis.com/gmail/v1/users/me/messages/send";
-    http.begin(url);
+    http.begin(GmailLinks::SEND_MESSAGE);
     http.addHeader("Authorization", "Bearer " + token->accessToken);
     http.addHeader("Content-Type", "application/json");
 
@@ -47,7 +46,7 @@ bool GmailModule::send(const OpenRF_Packet &pkt) {
 }
 
 void GmailModule::loop() {
-    // Poll Gmail messages using Gmail API if needed
+    // Optional: poll Gmail inbox using GmailLinks::LIST_MESSAGES
     // Convert new emails into OpenRF_Packet and call rxCallback
 }
 
