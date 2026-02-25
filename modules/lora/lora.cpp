@@ -4,47 +4,29 @@ const char* LoRaModule::name() {
     return "lora";
 }
 
-// Board auto-detection
-void LoRaModule::detectPins(uint8_t &ssPin, uint8_t &resetPin, uint8_t &dio0Pin) {
-    String chip = ESP.getChipModel();
-    int cores = ESP.getChipCores();
-
-    // Example profiles (expand as needed)
-    if (chip == "ESP32D0WDQ6") {          // T-Beam / LilyGo
-        ssPin = 5;
-        resetPin = 14;
-        dio0Pin = 2;
-    } else if (chip == "ESP32-WROOM-32") { // Heltec LoRa
-        ssPin = 18;
-        resetPin = 14;
-        dio0Pin = 26;
-    } else {                               // default fallback
-        ssPin = 5;
-        resetPin = 14;
-        dio0Pin = 2;
-    }
-
-    Serial.printf("LoRa pins auto-detected: NSS=%d, RESET=%d, DIO0=%d\n", ssPin, resetPin, dio0Pin);
-}
-
 void LoRaModule::begin() {
-    uint8_t ss, rst, dio0;
-    detectPins(ss, rst, dio0);
+    // Auto-detect board pins
+    BoardPins pins = detectBoardPins();
+    Serial.printf("LoRa pins auto-detected: NSS=%d, RESET=%d, DIO0=%d\n", pins.ss, pins.reset, pins.dio0);
 
-    SPI.begin();                  // Start SPI bus
-    LoRa.setPins(ss, rst, dio0);
+    // Initialize SPI and LoRa
+    SPI.begin();
+    LoRa.setPins(pins.ss, pins.reset, pins.dio0);
 
+    // Begin LoRa at default frequency (can later auto-detect or configure)
     if (!LoRa.begin(915E6)) {
         Serial.println("LoRa init failed!");
         while (1);
     }
 
+    // Set up receive callback
     LoRa.onReceive([](int packetSize){
         if (packetSize == sizeof(OpenRF_Packet)) {
             OpenRF_Packet pkt;
             for (int i = 0; i < packetSize; i++) {
                 ((uint8_t*)&pkt)[i] = LoRa.read();
             }
+            // Call router callback
             if (LoRaModule::rxCallback) {
                 LoRaModule::rxCallback(pkt);
             }
@@ -61,7 +43,7 @@ bool LoRaModule::send(const OpenRF_Packet &pkt) {
 }
 
 void LoRaModule::loop() {
-    // LoRa library handles receive asynchronously
+    // LoRa library handles receive asynchronously, so nothing required here
 }
 
 void LoRaModule::setReceiveCallback(void (*cb)(const OpenRF_Packet&)) {
