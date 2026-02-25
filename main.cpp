@@ -3,6 +3,8 @@
 #include "core/packet.h"
 
 #include "modules/lora/lora.h"
+#include "modules/meshtastic/meshtastic.h"
+#include "modules/reticulum/reticulum.h"
 #include "modules/discord/discord.h"
 #include "modules/sms/sms.h"
 #include "modules/slack/slack.h"
@@ -15,6 +17,9 @@
 Router router;
 
 LoRaModule lora;
+MeshtasticModule meshtastic;
+ReticulumModule reticulum;
+
 OAuthManager oauth;
 OAuthToken discordToken, smsToken, slackToken, gmailToken, steamToken;
 
@@ -26,6 +31,8 @@ SteamModule steam(&oauth, &steamToken, "STEAM_ID");
 
 void onPacketReceived(const OpenRF_Packet &pkt) {
     if (pkt.src != 0x00000001) lora.send(pkt);
+    if (pkt.src != 0x11111111) meshtastic.send(pkt);
+    if (pkt.src != 0x22222222) reticulum.send(pkt);
     if (pkt.src != 0xDDDDDDDD) discord.send(pkt);
     if (pkt.src != 0xABCDEF01) sms.send(pkt);
     if (pkt.src != 0xBBBBBBBB) slack.send(pkt);
@@ -42,6 +49,8 @@ void setup() {
     Serial.println("\nWiFi connected!");
 
     router.addTransport(&lora);
+    router.addTransport(&meshtastic);
+    router.addTransport(&reticulum);
     router.addTransport(&discord);
     router.addTransport(&sms);
     router.addTransport(&slack);
@@ -49,6 +58,8 @@ void setup() {
     router.addTransport(&steam);
 
     lora.setReceiveCallback(onPacketReceived);
+    meshtastic.setReceiveCallback(onPacketReceived);
+    reticulum.setReceiveCallback(onPacketReceived);
     discord.setReceiveCallback(onPacketReceived);
     sms.setReceiveCallback(onPacketReceived);
     slack.setReceiveCallback(onPacketReceived);
