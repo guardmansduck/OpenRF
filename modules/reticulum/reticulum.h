@@ -6,10 +6,8 @@
 class ReticulumModule : public Transport {
 private:
     void (*rxCallback)(const OpenRF_Packet&) = nullptr;
-
 public:
     ReticulumModule() {}
-
     const char* name() override { return "reticulum"; }
     void begin() override;
     bool send(const OpenRF_Packet &pkt) override;
