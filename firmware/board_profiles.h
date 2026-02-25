@@ -6,7 +6,6 @@ struct BoardPins {
     uint8_t ss;
     uint8_t reset;
     uint8_t dio0;
-    // Can add more fields if modules need them
 };
 
 // ===== Board-specific functions =====
