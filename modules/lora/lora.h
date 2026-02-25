@@ -4,13 +4,11 @@
 #include <Arduino.h>
 #include <SPI.h>
 #include <LoRa.h>
+#include "../../board_profiles.h"  // Root board profiles
 
 class LoRaModule : public Transport {
 private:
     void (*rxCallback)(const OpenRF_Packet&) = nullptr;
-
-    // Auto-detect SPI pins for board
-    void detectPins(uint8_t &ssPin, uint8_t &resetPin, uint8_t &dio0Pin);
 
 public:
     const char* name() override;
