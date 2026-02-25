@@ -17,3 +17,10 @@ namespace DiscordScopes {
 namespace SMSLinks {
     const String API_BASE           = "https://sms.example.com/api";
 }
+
+namespace GmailLinks {
+    const String API_BASE           = "https://gmail.googleapis.com/gmail/v1/users/me";
+    const String SEND_MESSAGE       = API_BASE + "/messages/send";
+    const String LIST_MESSAGES      = API_BASE + "/messages";
+    const String GET_MESSAGE        = API_BASE + "/messages/"; // append message ID
+}
