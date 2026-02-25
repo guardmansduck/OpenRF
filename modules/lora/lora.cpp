@@ -5,28 +5,23 @@ const char* LoRaModule::name() {
 }
 
 void LoRaModule::begin() {
-    // Auto-detect board pins
     BoardPins pins = detectBoardPins();
     Serial.printf("LoRa pins auto-detected: NSS=%d, RESET=%d, DIO0=%d\n", pins.ss, pins.reset, pins.dio0);
 
-    // Initialize SPI and LoRa
     SPI.begin();
     LoRa.setPins(pins.ss, pins.reset, pins.dio0);
 
-    // Begin LoRa at default frequency (can later auto-detect or configure)
     if (!LoRa.begin(915E6)) {
         Serial.println("LoRa init failed!");
         while (1);
     }
 
-    // Set up receive callback
     LoRa.onReceive([](int packetSize){
         if (packetSize == sizeof(OpenRF_Packet)) {
             OpenRF_Packet pkt;
             for (int i = 0; i < packetSize; i++) {
                 ((uint8_t*)&pkt)[i] = LoRa.read();
             }
-            // Call router callback
             if (LoRaModule::rxCallback) {
                 LoRaModule::rxCallback(pkt);
             }
@@ -43,7 +38,7 @@ bool LoRaModule::send(const OpenRF_Packet &pkt) {
 }
 
 void LoRaModule::loop() {
-    // LoRa library handles receive asynchronously, so nothing required here
+    // nothing; receive handled asynchronously
 }
 
 void LoRaModule::setReceiveCallback(void (*cb)(const OpenRF_Packet&)) {
