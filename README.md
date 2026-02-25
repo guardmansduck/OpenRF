@@ -40,7 +40,7 @@ All without any extra gateway hardware — the radio itself is the bridge.
 
 ---
 
-## 🧱 Architecture
+## Architecture
 
 OpenRF firmware is organized in layers:
 
@@ -53,7 +53,7 @@ All transports feed into the router, allowing multi-radio forwarding and bridgin
 
 ---
 
-## 📱 Internet Bridge
+## Internet Bridge
 
 A mobile companion app connects via BLE or USB and enables:
 
@@ -66,7 +66,7 @@ The phone provides internet connectivity while OpenRF handles RF routing.
 
 ---
 
-## 🛠️ Supported Hardware (Planned)
+## Supported Hardware (Planned)
 
 - ESP32 LoRa boards  
 - Meshtastic devices  
@@ -77,7 +77,7 @@ The phone provides internet connectivity while OpenRF handles RF routing.
 
 ---
 
-## 🌍 Related Projects
+## Related Projects
 
 OpenRF interoperates and bridges across existing radio stacks:
 
@@ -87,7 +87,7 @@ OpenRF interoperates and bridges across existing radio stacks:
 
 ---
 
-## 🚀 Roadmap
+## Roadmap
 
 **Phase 1:**  
 - Universal packet layer  
@@ -108,13 +108,13 @@ OpenRF interoperates and bridges across existing radio stacks:
 
 ---
 
-## 🧾 License
+## License
 
 OpenRF is licensed under **GPL-3.0** to ensure openness and collaboration in the RF firmware ecosystem.
 
 ---
 
-## 🔧 Getting Started
+## Getting Started
 
 1. Clone the repository:
 
