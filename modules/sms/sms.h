@@ -12,9 +12,9 @@ private:
     void (*rxCallback)(const OpenRF_Packet&) = nullptr;
     OAuthManager *oauth;
     OAuthToken *token;
-    String phoneNumber;  // the number this module sends from / listens to
+    String phoneNumber;
 
-    void pollMessages(); // optional for pulling SMS if API supports it
+    void pollMessages();
 
 public:
     SMSModule(OAuthManager *oauthManager,
