@@ -1,32 +1,21 @@
 #pragma once
 #include <Arduino.h>
 
-// Struct to hold generic pin configurations
+// Generic pin configuration
 struct BoardPins {
     uint8_t ss;
     uint8_t reset;
     uint8_t dio0;
-    // Add more fields here if other modules need pins (e.g., I2C, UART)
+    // Can add more fields if modules need them
 };
 
 // ===== Board-specific functions =====
-inline BoardPins board_TBeam() {
-    return {5, 14, 2};
-}
+inline BoardPins board_TBeam()      { return {5, 14, 2}; }
+inline BoardPins board_Heltec()     { return {18, 14, 26}; }
+inline BoardPins board_TDeck()      { return {15, 27, 33}; }
+inline BoardPins board_Default()    { return {5, 14, 2}; }
 
-inline BoardPins board_Heltec() {
-    return {18, 14, 26};
-}
-
-inline BoardPins board_TDeck() {
-    return {15, 27, 33};
-}
-
-inline BoardPins board_Default() {
-    return {5, 14, 2};
-}
-
-// ===== Central auto-detect function =====
+// ===== Auto-detect function =====
 inline BoardPins detectBoardPins() {
     String chip = ESP.getChipModel();
 
@@ -36,7 +25,7 @@ inline BoardPins detectBoardPins() {
         return board_Heltec();
     } else if (chip == "ESP32-PICO-D4") {  // Example T-Deck
         return board_TDeck();
-    } else {                               // Default fallback
+    } else {
         return board_Default();
     }
 }
