@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <SPI.h>
 #include <LoRa.h>
-#include "../../board_profiles.h"  // Root board profiles
+#include "../../board_profiles.h"
 
 class LoRaModule : public Transport {
 private:
