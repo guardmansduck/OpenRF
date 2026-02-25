@@ -15,7 +15,6 @@ public:
 class Router {
 private:
     std::vector<Transport*> transports;
-
 public:
     void addTransport(Transport* t) { transports.push_back(t); }
     void begin() { for (auto t : transports) t->begin(); }
