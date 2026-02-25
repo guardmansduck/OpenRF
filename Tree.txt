@@ -1,0 +1,36 @@
+firmware/
+├── board_profiles.h
+├── config/
+│   └── links.h
+├── core/
+│   ├── packet.h
+│   └── router.h
+├── oauth/
+│   ├── oauth.h
+│   └── oauth.cpp
+├── modules/
+│   ├── lora/
+│   │   ├── lora.h
+│   │   └── lora.cpp
+│   ├── meshtastic/
+│   │   ├── meshtastic.h
+│   │   └── meshtastic.cpp
+│   ├── reticulum/
+│   │   ├── reticulum.h
+│   │   └── reticulum.cpp
+│   ├── discord/
+│   │   ├── discord.h
+│   │   └── discord.cpp
+│   ├── sms/
+│   │   ├── sms.h
+│   │   └── sms.cpp
+│   ├── slack/
+│   │   ├── slack.h
+│   │   └── slack.cpp
+│   ├── gmail/
+│   │   ├── gmail.h
+│   │   └── gmail.cpp
+│   └── steam/
+│       ├── steam.h
+│       └── steam.cpp
+└── main.cpp
